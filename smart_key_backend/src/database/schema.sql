@@ -1,0 +1,151 @@
+CREATE TABLE roles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+CREATE TABLE users (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  role_id INT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  mobile VARCHAR(15) UNIQUE,
+  email VARCHAR(100) UNIQUE,
+  password VARCHAR(255),
+  status ENUM('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+
+CREATE TABLE organizations (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  address TEXT,
+  status ENUM('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE units (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  org_id BIGINT NOT NULL,
+  owner_id BIGINT NOT NULL,
+  unit_name VARCHAR(100),
+  status ENUM('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
+
+  FOREIGN KEY (org_id) REFERENCES organizations(id),
+  FOREIGN KEY (owner_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE keyss (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  unit_id BIGINT NOT NULL,
+  key_code VARCHAR(50) UNIQUE NOT NULL,
+  key_type ENUM('MAIN','SPARE','EMERGENCY'),
+  locker_no VARCHAR(50),
+  status ENUM('AVAILABLE','ISSUED','LOST') DEFAULT 'AVAILABLE',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (unit_id) REFERENCES units(id)
+);
+
+
+CREATE TABLE key_requests (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  key_id BIGINT NOT NULL,
+  requested_by BIGINT NOT NULL,
+  approved_by BIGINT,
+  status ENUM('PENDING','APPROVED','REJECTED') DEFAULT 'PENDING',
+  requested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (key_id) REFERENCES keyss(id),
+  FOREIGN KEY (requested_by) REFERENCES users(id),
+  FOREIGN KEY (approved_by) REFERENCES users(id)
+);
+
+
+CREATE TABLE key_transactions (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  key_id BIGINT NOT NULL,
+  issued_to BIGINT NOT NULL,
+  issued_by BIGINT NOT NULL,
+  issue_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  return_time TIMESTAMP NULL,
+  access_method ENUM('OTP','QR','RFID'),
+  status ENUM('ISSUED','RETURNED','LOST') DEFAULT 'ISSUED',
+
+  FOREIGN KEY (key_id) REFERENCES keyss(id),
+  FOREIGN KEY (issued_to) REFERENCES users(id),
+  FOREIGN KEY (issued_by) REFERENCES users(id)
+);
+
+
+CREATE TABLE audit_logs (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user_id BIGINT,
+  action VARCHAR(100),
+  entity VARCHAR(50),
+  entity_id BIGINT,
+  ip_address VARCHAR(50),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE notifications (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user_id BIGINT NOT NULL,
+  title VARCHAR(100),
+  message TEXT,
+  channel ENUM('SMS','EMAIL','WHATSAPP'),
+  sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE security_assignments (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  org_id BIGINT,
+  user_id BIGINT,
+  assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (org_id) REFERENCES organizations(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE setup_requests (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  requested_by BIGINT NOT NULL,
+  org_name VARCHAR(150) NOT NULL,
+  org_address TEXT,
+  unit_name VARCHAR(100) NOT NULL,
+  status ENUM('PENDING','APPROVED','REJECTED') DEFAULT 'PENDING',
+  approved_by BIGINT NULL,
+  note TEXT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (requested_by) REFERENCES users(id),
+  FOREIGN KEY (approved_by) REFERENCES users(id)
+);
+
+
+CREATE TABLE key_setup_requests (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  requested_by INT NOT NULL,
+  unit_id INT NOT NULL,
+  key_code VARCHAR(100) NOT NULL,
+  key_type VARCHAR(20) DEFAULT 'MAIN',
+  locker_no VARCHAR(50) NULL,
+  status ENUM('PENDING','APPROVED','REJECTED') DEFAULT 'PENDING',
+  note VARCHAR(255) NULL,
+  approved_by INT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
