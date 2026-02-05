@@ -58,7 +58,7 @@ export default function NavBar() {
       { to: "/admin/orgs", label: "Orgs" },
       { to: "/admin/units", label: "Units" },
       { to: "/admin/keys", label: "Keys" },
-      { to: "/admin/requests", label: "Requests" },
+      { to: "/admin/requests", label: "Key Requests" },
       { to: "/admin/reports", label: "Reports" },
       { to: "/admin/setup-requests", label: "Setup Requests" }
 

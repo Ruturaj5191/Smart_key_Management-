@@ -18,6 +18,7 @@ export default function Orgs() {
   const [rows, setRows] = useState([]);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
+  const [phone_number, setPhone] = useState("");
   const [busy, setBusy] = useState(false);
 
   const load = async () => {
@@ -30,9 +31,10 @@ export default function Orgs() {
 
     setBusy(true);
     try {
-      await api.post("/admin/orgs", { name: name.trim(), address: address || null });
+      await api.post("/admin/orgs", { name: name.trim(), address: address || null ,phone_number: phone_number || null });
       setName("");
       setAddress("");
+      setPhone("");
       await load();
     } catch (err) {
       alert(err?.response?.data?.message || err.message || "Create organization failed");
@@ -81,6 +83,14 @@ export default function Orgs() {
               onChange={(e) => setAddress(e.target.value)}
             />
 
+             <input
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+                         placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+              placeholder="Mobile Number"
+              value={phone_number}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+
             <button
               onClick={create}
               disabled={busy}
@@ -102,7 +112,7 @@ export default function Orgs() {
                 <th className="px-4 py-3 text-left font-semibold">ID</th>
                 <th className="px-4 py-3 text-left font-semibold">Name</th>
                 <th className="px-4 py-3 text-left font-semibold">Address</th>
-
+                <th className="px-4 py-3 text-left font-semibold">Phone Number</th>
                 <th className="px-4 py-3 text-left font-semibold">Status</th>
                 <th className="px-4 py-3 text-left font-semibold">Created</th>
               </tr>
@@ -114,7 +124,7 @@ export default function Orgs() {
                   <td className="px-4 py-3">{r.id}</td>
                   <td className="px-4 py-3 font-medium text-slate-900">{r.name}</td>
                   <td className="px-4 py-3 font-medium text-slate-900">{r.address}</td>
-
+                  <td className="px-4 py-3 font-medium text-slate-900">{r.phone_number}</td>
                   <td className="px-4 py-3">
                     <StatusBadge status={r.status} />
                   </td>

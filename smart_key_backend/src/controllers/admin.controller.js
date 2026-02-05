@@ -16,7 +16,7 @@ async function logAudit({ userId, action, entity, entityId, ip }) {
   }
 }
 
-async function notify({ userId, title, message, channel = "EMAIL" }) {
+async function notify({ userId, title, message, channel = "NOTIFY" }) {
   try {
     await exe(
       `INSERT INTO notifications (user_id, title, message, channel)
@@ -39,15 +39,16 @@ function getClientIp(req) {
 // ---------- Organizations ----------
 exports.createOrganization = async (req, res, next) => {
   try {
-    const { name, address } = req.body;
+    const { name, address,phone_number } = req.body;
 
     if (!name) {
       return res.status(400).json({ success: false, message: "name is required" });
     }
 
+
     const result = await exe(
-      `INSERT INTO organizations (name, address) VALUES (?, ?)`,
-      [name, address || null]
+      `INSERT INTO organizations (name, address,phone_number) VALUES (?, ?, ?)`,
+      [name, address || null, phone_number || null]
     );
 
     await logAudit({
@@ -72,7 +73,7 @@ exports.listOrganizations = async (req, res, next) => {
   try {
     const { status } = req.query;
 
-    let sql = `SELECT id, name, address, status, created_at FROM organizations`;
+    let sql = `SELECT id, name, address, phone_number, status, created_at FROM organizations`;
     const params = [];
 
     if (status) {
@@ -93,7 +94,7 @@ exports.listOrganizations = async (req, res, next) => {
 exports.updateOrganization = async (req, res, next) => {
   try {
     const orgId = Number(req.params.id);
-    const { name, address, status } = req.body;
+    const { name, address, phone_number, status } = req.body;
 
     if (!orgId) {
       return res.status(400).json({ success: false, message: "Invalid organization id" });
@@ -115,6 +116,12 @@ exports.updateOrganization = async (req, res, next) => {
       updates.push("address = ?");
       params.push(address);
     }
+    if (phone_number !== undefined) {
+  updates.push("phone_number = ?");
+  params.push(phone_number);
+}
+
+
     if (status !== undefined) {
       updates.push("status = ?");
       params.push(status);
@@ -645,28 +652,78 @@ exports.rejectKeyRequest = async (req, res, next) => {
 };
 
 // ---------- Reports ----------
+// exports.listIssuedKeys = async (req, res, next) => {
+//   try {
+//     // Keys currently issued: transaction exists with status ISSUED and return_time NULL
+//     const sql = `
+//       SELECT kt.id AS transaction_id,
+//              kt.key_id, k.key_code, k.key_type,
+//              kt.issued_to, ut.name AS issued_to_name,
+//              kt.issued_by, ub.name AS issued_by_name,
+//              kt.issue_time, kt.access_method, kt.status
+//       FROM key_transactions kt
+//       JOIN keyss k ON k.id = kt.key_id
+//       JOIN users ut ON ut.id = kt.issued_to
+//       JOIN users ub ON ub.id = kt.issued_by
+//       WHERE kt.status = 'ISSUED' AND kt.return_time IS NULL
+//       ORDER BY kt.issue_time DESC
+//     `;
+//     const rows = await exe(sql, []);
+//     return res.status(200).json({ success: true, data: rows });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
+// Admin Report: issued keys (supports history)
+// GET /api/admin/reports/issued-keys?status=ALL&open_only=0
 exports.listIssuedKeys = async (req, res, next) => {
   try {
-    // Keys currently issued: transaction exists with status ISSUED and return_time NULL
-    const sql = `
+    const status = String(req.query.status || "ISSUED").toUpperCase();
+    const openOnly = String(req.query.open_only || "1") === "1"; // default = only open issued
+
+    const allowed = ["ISSUED", "RETURNED", "LOST", "ALL"];
+    if (!allowed.includes(status)) {
+      return res.status(400).json({ success: false, message: "Invalid status" });
+    }
+
+    let sql = `
       SELECT kt.id AS transaction_id,
              kt.key_id, k.key_code, k.key_type,
              kt.issued_to, ut.name AS issued_to_name,
              kt.issued_by, ub.name AS issued_by_name,
-             kt.issue_time, kt.access_method, kt.status
+             kt.issue_time, kt.return_time,
+             kt.access_method, kt.status
       FROM key_transactions kt
       JOIN keyss k ON k.id = kt.key_id
       JOIN users ut ON ut.id = kt.issued_to
       JOIN users ub ON ub.id = kt.issued_by
-      WHERE kt.status = 'ISSUED' AND kt.return_time IS NULL
-      ORDER BY kt.issue_time DESC
     `;
-    const rows = await exe(sql, []);
+
+    const where = [];
+    const params = [];
+
+    if (openOnly) {
+      // ONLY currently issued (not returned)
+      where.push(`kt.status='ISSUED' AND kt.return_time IS NULL`);
+    } else {
+      // history mode
+      if (status !== "ALL") {
+        where.push(`kt.status = ?`);
+        params.push(status);
+      }
+    }
+
+    if (where.length) sql += ` WHERE ` + where.join(" AND ");
+    sql += ` ORDER BY kt.issue_time DESC LIMIT 200`;
+
+    const rows = await exe(sql, params);
     return res.status(200).json({ success: true, data: rows });
   } catch (err) {
     next(err);
   }
 };
+
 
 exports.listAuditLogs = async (req, res, next) => {
   try {
@@ -1078,3 +1135,5 @@ exports.listUsers = async (req, res, next) => {
     next(err);
   }
 };
+
+

@@ -17,7 +17,9 @@ export default function Reports() {
   const loadIssued = async () => {
     setBusy("issued");
     try {
-      const res = await api.get("/admin/reports/issued-keys");
+      // const res = await api.get("/admin/reports/issued-keys");
+  const res=await api.get("/admin/reports/issued-keys", { params: { open_only: 0, status: "ALL" } })
+
       setIssued(res.data.data);
     } catch (err) {
       alert(err?.response?.data?.message || err.message || "Failed to load issued keys");
