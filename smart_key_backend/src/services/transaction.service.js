@@ -13,7 +13,10 @@ exports.issueKey = async ({ key_id, issued_to, issued_by, access_method, request
   if (!reqRows.length) throw Object.assign(new Error("Invalid request_id"), { statusCode: 400 });
 
   const reqRow = reqRows[0];
-  if (reqRow.status !== "APPROVED") throw Object.assign(new Error("Request is not APPROVED"), { statusCode: 400 });
+  // if (reqRow.status !== "APPROVED") throw Object.assign(new Error("Request is not APPROVED"), { statusCode: 400 });
+  if (reqRow.status !== "OTP_VERIFIED")
+  throw Object.assign(new Error("OTP is not verified for this request"), { statusCode: 400 });
+
   if (Number(reqRow.key_id) !== Number(key_id) || Number(reqRow.requested_by) !== Number(issued_to)) {
     throw Object.assign(new Error("request_id does not match key_id/issued_to"), { statusCode: 400 });
   }

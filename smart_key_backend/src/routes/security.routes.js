@@ -17,6 +17,8 @@ router.get("/transactions", ctrl.listAllTransactions);
 
 // ✅ list requests for security to issue
 router.get("/requests", ctrl.listIssueRequests);
+router.post("/requests/:id/otp", ctrl.generateOtpForRequest);
+
 
 // existing
 router.post("/issue", ctrl.issueKey);

@@ -10,5 +10,7 @@ router.use(auth);
 router.use(allowRoles([4])); // OWNER
 
 router.post("/requests", requestsCtrl.createKeyRequest);
+router.post("/requests/:id/verify-otp", requestsCtrl.verifyOtp);
+
 
 module.exports = router;

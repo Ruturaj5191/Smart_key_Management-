@@ -23,7 +23,8 @@ export default function IssueKey() {
 
   const loadRequests = async () => {
     try {
-      const res = await api.get("/security/requests?status=APPROVED");
+      // const res = await api.get("/security/requests?status=APPROVED");
+      const res = await api.get("/security/requests?status=OTP_VERIFIED");
       setRequests(res.data.data || []);
     } catch (err) {
       alert(err?.response?.data?.message || err.message || "Failed to load requests");

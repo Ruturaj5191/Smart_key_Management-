@@ -147,9 +147,7 @@ export default function Users() {
             </table>
           </div>
 
-          <p className="text-xs text-slate-500">
-            Backend needed: <code>/api/superadmin/users</code>
-          </p>
+
         </div>
       </div>
     </div>
