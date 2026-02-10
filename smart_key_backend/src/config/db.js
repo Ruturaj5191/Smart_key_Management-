@@ -14,4 +14,12 @@ const conn=mysql.createConnection({
 
 const exe=util.promisify(conn.query).bind(conn);
 
+conn.connect((err)=>{
+    if(err){
+        console.error('DB Connection Error:', err);
+        process.exit(1);
+    }   
+    console.log('DB Connected');
+});
+
 module.exports=exe;
