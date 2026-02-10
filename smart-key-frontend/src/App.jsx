@@ -22,6 +22,8 @@ import Keys from "./pages/admin/Keys";
 import Requests from "./pages/admin/Requests";
 import Reports from "./pages/admin/Reports";
 import AdminSetupRequests from "./pages/admin/SetupRequests";
+import AdminFacilityRequests from "./pages/admin/FacilityRequests";
+
 
 // owner pages
 import MyUnits from "./pages/owner/MyUnits";
@@ -29,6 +31,11 @@ import MyKeys from "./pages/owner/MyKeys";
 import MyRequests from "./pages/owner/MyRequests";
 import Notifications from "./pages/owner/Notifications";
 import OwnerSetupRequests from "./pages/owner/SetupRequests";
+import RequestWater from "./pages/owner/RequestWater";
+import RequestCleaning from "./pages/owner/RequestCleaning";
+import FacilityRequests from "./pages/security/FacilityRequests";
+import MyFacilityRequests from "./pages/owner/MyFacilityRequests";
+
 
 
 
@@ -137,6 +144,18 @@ export default function App() {
             </ProtectedRoute>
           } />
 
+          <Route
+            path="/admin/facility-requests"
+            element={
+              <ProtectedRoute>
+                <RoleRoute allowed={[ROLE.ADMIN, ROLE.SUPER_ADMIN]}>
+                  <AdminFacilityRequests />
+                </RoleRoute>
+              </ProtectedRoute>
+            }
+          />
+
+
           {/* ✅ SUPERADMIN Dashboard */}
           <Route
             path="/superadmin"
@@ -229,6 +248,30 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/owner/request-water" element={
+            <ProtectedRoute><RoleRoute allowed={[ROLE.OWNER]}><RequestWater /></RoleRoute></ProtectedRoute>
+          } />
+
+          <Route path="/owner/request-cleaning" element={
+            <ProtectedRoute><RoleRoute allowed={[ROLE.OWNER]}><RequestCleaning /></RoleRoute></ProtectedRoute>
+          } />
+
+          <Route path="/security/facility-requests" element={
+            <ProtectedRoute><RoleRoute allowed={[ROLE.SECURITY, ROLE.ADMIN]}><FacilityRequests /></RoleRoute></ProtectedRoute>
+          } />
+          <Route
+            path="/owner/facility-requests"
+            element={
+              <ProtectedRoute>
+                <RoleRoute allowed={[ROLE.OWNER]}>
+                  <MyFacilityRequests />
+                </RoleRoute>
+              </ProtectedRoute>
+            }
+          />
+
+
 
           {/* Security */}
           <Route

@@ -60,7 +60,9 @@ export default function NavBar() {
       { to: "/admin/keys", label: "Keys" },
       { to: "/admin/requests", label: "Key Requests" },
       { to: "/admin/reports", label: "Reports" },
-      { to: "/admin/setup-requests", label: "Setup Requests" }
+      { to: "/admin/setup-requests", label: "Setup Requests" },
+      { to: "/admin/facility-requests", label: "Facility Requests" },
+
 
     );
   }
@@ -86,7 +88,12 @@ export default function NavBar() {
       { to: "/owner/keys", label: "My Keys" },
       { to: "/owner/requests", label: "My Requests" },
       { to: "/owner/notifications", label: "Notifications" },
-      { to: "/owner/setup-requests", label: "Setup Request" }
+      { to: "/owner/setup-requests", label: "Setup Request" },
+      { to: "/owner/request-water", label: "Request Water" },
+      { to: "/owner/request-cleaning", label: "Request Cleaning" },
+      { to: "/owner/facility-requests", label: "Facility Requests" },
+
+
 
     );
   }
@@ -97,7 +104,9 @@ export default function NavBar() {
       { to: "/security/orgs", label: "Assigned Orgs" },
       { to: "/security/open", label: "Open Txns" },
       { to: "/security/issue", label: "Issue Key" },
-      { to: "/security/return", label: "Return Key" }
+      { to: "/security/return", label: "Return Key" },
+      { to: "/security/facility-requests", label: "Facility Requests" },
+
     );
   }
 

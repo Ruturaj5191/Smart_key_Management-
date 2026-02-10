@@ -261,3 +261,111 @@ exports.verifyOtp = async (req, res, next) => {
     next(e);
   }
 };
+
+exports.createFacilityRequest = async (req, res) => {
+  const { request_type, description, unit_id } = req.body;
+  const user_id = req.user.id;
+
+  const sql = `
+    INSERT INTO facility_requests
+    (user_id, unit_id, request_type, description)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  await exe(
+    sql,
+    [user_id, unit_id, request_type, description],
+    (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: "Failed to create facility request",
+          error: err,
+        });
+      }
+
+      res.status(201).json({
+        success: true,
+        message: "Facility request created successfully",
+      });
+    }
+  );
+};
+
+exports.getFacilityRequests = async(req, res) => {
+  const role = req.user.role;
+  const userId = req.user.id;
+
+  let sql = `
+    SELECT 
+      fr.id,
+      fr.request_type,
+      fr.status,
+      fr.description,
+      fr.created_at,
+
+      u.id AS unit_id,
+      u.unit_name,
+
+      o.name AS org_name,
+
+      usr.name AS user_name
+
+    FROM facility_requests fr
+    JOIN users usr ON usr.id = fr.user_id
+    JOIN units u ON u.id = fr.unit_id
+    JOIN organizations o ON o.id = u.org_id
+  `;
+
+  const params = [];
+
+  // OWNER should see only their own requests
+  if (role === 4) {
+    sql += " WHERE fr.user_id = ?";
+    params.push(userId);
+  }
+
+  sql += " ORDER BY fr.id DESC";
+
+  await exe(sql, params, (err, rows) => {
+    if (err) {
+      console.error("GET FACILITY REQUESTS ERROR:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch facility requests",
+      });
+    }
+
+    res.json({
+      success: true,
+      data: rows,
+    });
+  });
+};
+
+
+exports.updateFacilityRequestStatus = async (req, res) => {
+  const { status } = req.body;
+  const { id } = req.params;
+
+  const sql = `
+    UPDATE facility_requests
+    SET status = ?
+    WHERE id = ?
+  `;
+
+  await exe(sql, [status, id], (err) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to update status",
+        error: err,
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Facility request status updated",
+    });
+  });
+};
