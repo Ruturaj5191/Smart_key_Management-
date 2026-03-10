@@ -18,7 +18,7 @@ export default function Reports() {
     setBusy("issued");
     try {
       // const res = await api.get("/admin/reports/issued-keys");
-  const res=await api.get("/admin/reports/issued-keys", { params: { open_only: 0, status: "ALL" } })
+      const res = await api.get("/admin/reports/issued-keys", { params: { open_only: 0, status: "ALL" } })
 
       setIssued(res.data.data);
     } catch (err) {
@@ -65,7 +65,7 @@ export default function Reports() {
             <button
               onClick={loadAudit}
               disabled={busy === "audit"}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium
+              className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium
                          hover:bg-slate-50 transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {busy === "audit" ? "Loading..." : "Load Audit Logs"}

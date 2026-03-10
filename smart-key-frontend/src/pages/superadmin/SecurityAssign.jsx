@@ -5,13 +5,13 @@ function RoleBadge({ roleId }) {
   const id = Number(roleId);
   const label =
     id === 1 ? "SUPER_ADMIN" :
-    id === 2 ? "ADMIN" :
-    id === 3 ? "SECURITY" :
-    id === 4 ? "OWNER" : `ROLE_${id}`;
+      id === 2 ? "ADMIN" :
+        id === 3 ? "SECURITY" :
+          id === 4 ? "OWNER" : `ROLE_${id}`;
 
   const tone =
     id === 3 ? "bg-sky-100 text-sky-700" :
-    "bg-slate-100 text-slate-700";
+      "bg-slate-100 text-slate-700";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
@@ -115,7 +115,7 @@ export default function SecurityAssign() {
 
           <button
             onClick={refreshAll}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+            className="h-10 rounded-xl border text-slate-900  border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
           >
             Refresh
           </button>
@@ -125,12 +125,12 @@ export default function SecurityAssign() {
           {/* ✅ Dropdowns */}
           <div className="grid gap-3 md:grid-cols-3">
             <select
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 w-full rounded-xl  text-slate-900 border border-slate-200 bg-white px-3 text-sm
                          focus:outline-none focus:ring-2 focus:ring-slate-200"
               value={orgId}
               onChange={(e) => setOrgId(e.target.value)}
             >
-              <option value="">Select Organization</option>
+              <option value="" className="text-slate-900">Select Organization</option>
               {orgOptions.map((o) => (
                 <option key={o.id} value={o.id}>
                   {o.label}
@@ -139,12 +139,12 @@ export default function SecurityAssign() {
             </select>
 
             <select
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 w-full rounded-xl  text-slate-900 border border-slate-200 bg-white px-3 text-sm
                          focus:outline-none focus:ring-2 focus:ring-slate-200"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             >
-              <option value="">Select Security User</option>
+              <option value="" className="text-slate-900">Select Security User</option>
               {userOptions.map((u) => (
                 <option key={u.id} value={u.id}>
                   {u.label}

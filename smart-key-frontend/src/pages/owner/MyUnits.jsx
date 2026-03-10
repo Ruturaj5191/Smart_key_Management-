@@ -47,12 +47,12 @@ export default function MyUnits() {
                 <tbody className="divide-y divide-slate-100">
                   {rows.map((r) => (
                     <tr key={r.id} className="hover:bg-slate-50/70">
-                      <td className="px-4 py-3">{r.id}</td>
+                      <td className="px-4 py-3 text-slate-900">{r.id}</td>
                       <td className="px-4 py-3">
                         <span className="font-medium text-slate-900">{r.org_id}</span>
                         {r.org_name ? <span className="text-slate-500"> ({r.org_name})</span> : null}
                       </td>
-                      <td className="px-4 py-3">{r.unit_name || "-"}</td>
+                      <td className="px-4 py-3 text-slate-900">{r.unit_name || "-"}</td>
                       <td className="px-4 py-3"><Badge status={r.status} /></td>
                     </tr>
                   ))}

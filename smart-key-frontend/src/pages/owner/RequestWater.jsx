@@ -49,7 +49,7 @@ export default function RequestWater() {
       <select
         value={unitId}
         onChange={(e) => setUnitId(e.target.value)}
-        className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+        className="h-10 w-full rounded-xl  text-slate-900 border border-slate-200 bg-white px-3 text-sm
                    focus:outline-none focus:ring-2 focus:ring-slate-200"
       >
         <option value="">Select Unit</option>
@@ -65,7 +65,7 @@ export default function RequestWater() {
         placeholder="Notes (optional)"
         value={desc}
         onChange={(e) => setDesc(e.target.value)}
-        className="rounded-xl border border-slate-200 p-3 w-full text-sm
+        className="rounded-xl border  text-slate-900 border-slate-200 p-3 w-full text-sm
                    focus:outline-none focus:ring-2 focus:ring-slate-200"
       />
 

@@ -6,8 +6,8 @@ function StatusBadge({ status }) {
     status === "APPROVED"
       ? "bg-emerald-100 text-emerald-700"
       : status === "REJECTED"
-      ? "bg-rose-100 text-rose-700"
-      : "bg-amber-100 text-amber-700";
+        ? "bg-rose-100 text-rose-700"
+        : "bg-amber-100 text-amber-700";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
@@ -68,7 +68,7 @@ export default function IssueKey() {
 
           <button
             onClick={loadRequests}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+            className="h-10 rounded-xl text-slate-900 border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
           >
             Refresh
           </button>
@@ -78,7 +78,7 @@ export default function IssueKey() {
           <div className="flex gap-3 items-center">
             <label className="text-sm font-medium text-slate-700">Access Method</label>
             <select
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm"
+              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900"
               value={accessMethod}
               onChange={(e) => setAccessMethod(e.target.value)}
             >
@@ -105,7 +105,7 @@ export default function IssueKey() {
                 <tbody className="divide-y divide-slate-100">
                   {requests.map((r) => (
                     <tr key={r.id} className="hover:bg-slate-50/70">
-                      <td className="px-4 py-3">{r.id}</td>
+                      <td className="px-4 py-3 text-slate-900">{r.id}</td>
                       <td className="px-4 py-3">
                         <span className="font-medium text-slate-900">{r.key_id}</span>{" "}
                         <span className="text-slate-500">({r.key_code})</span>

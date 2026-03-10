@@ -19,17 +19,17 @@ function RoleBadge({ roleId }) {
   const id = Number(roleId);
   const tone =
     id === 1
-      ? "bg-slate-200 text-slate-800"
+      ? "bg-brand-500/20 text-brand-300 border-brand-500/30"
       : id === 2
-      ? "bg-indigo-100 text-indigo-700"
+      ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/30"
       : id === 3
-      ? "bg-sky-100 text-sky-700"
+      ? "bg-sky-500/20 text-sky-300 border-sky-500/30"
       : id === 4
-      ? "bg-emerald-100 text-emerald-700"
-      : "bg-slate-100 text-slate-600";
+      ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+      : "bg-white/10 text-slate-300 border-white/20";
 
   return (
-    <span className={cx("inline-flex rounded-full px-2.5 py-1 text-xs font-medium", tone)}>
+    <span className={cx("inline-flex rounded-full border px-2.5 py-0.5 text-[0.65rem] font-bold tracking-wider", tone)}>
       {RoleLabel(roleId)}
     </span>
   );
@@ -111,32 +111,32 @@ export default function NavBar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur">
-      <div className="mx-auto max-w-6xl px-4 py-3">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-slate-950/80 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          
           {/* Left: Brand + Links */}
-          <div className="flex flex-col gap-3 md:flex-row md:items-center">
-            <div className="flex items-center gap-2">
-              <div className="grid h-9 w-9 place-items-center rounded-xl bg-slate-900 text-white text-sm font-bold">
-                SK
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-3">
+              <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-lg shadow-brand-500/20">
+                <span className="text-xs font-bold tracking-tighter">SK</span>
               </div>
-              <div>
-                <div className="text-sm font-semibold text-slate-900">Smart Key</div>
-                <div className="text-xs text-slate-500">Management</div>
+              <div className="hidden sm:block">
+                <div className="text-sm font-bold text-white tracking-tight">Smart Key</div>
               </div>
             </div>
 
-            <nav className="flex flex-wrap gap-2">
+            <nav className="hidden md:flex items-center gap-1">
               {links.map((l) => (
                 <NavLink
                   key={l.to}
                   to={l.to}
                   className={({ isActive }) =>
                     cx(
-                      "rounded-xl px-3 py-2 text-sm font-medium transition",
+                      "rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200",
                       isActive
-                        ? "bg-slate-900 text-white"
-                        : "text-slate-700 hover:bg-slate-100"
+                        ? "bg-white/10 text-white"
+                        : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
                     )
                   }
                   end={l.to === "/"}
@@ -148,20 +148,25 @@ export default function NavBar() {
           </div>
 
           {/* Right: User + Logout */}
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
-            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 py-2">
-              <div className="text-sm font-semibold text-slate-900">{user.name}</div>
-              <RoleBadge roleId={user.role_id} />
-              <div className="text-xs text-slate-500">id: {user.id}</div>
+          <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-3 rounded-full border border-white/5 bg-white/5 pr-3 pl-1 py-1">
+              <div className="grid h-6 w-6 place-items-center rounded-full bg-slate-800 text-[10px] font-bold text-white">
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="text-xs font-semibold text-slate-200">{user.name}</div>
+                <RoleBadge roleId={user.role_id} />
+              </div>
             </div>
 
             <button
               onClick={logout}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50 transition"
+              className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-white/10 hover:border-white/20"
             >
               Logout
             </button>
           </div>
+
         </div>
       </div>
     </header>

@@ -103,7 +103,7 @@ export default function ReturnKey() {
 
           <button
             onClick={loadOpenTxns}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+            className="h-10 rounded-xl text-slate-900 border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
           >
             Refresh
           </button>
@@ -120,7 +120,7 @@ export default function ReturnKey() {
               <select
                 value={selectedTxnId}
                 onChange={(e) => onSelectTxn(e.target.value)}
-                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                            focus:outline-none focus:ring-2 focus:ring-slate-200 md:col-span-2"
               >
                 <option value="">
@@ -155,7 +155,7 @@ export default function ReturnKey() {
             <div className="text-sm font-semibold text-slate-900">Return by Key ID</div>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
               <input
-                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                            placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
                 placeholder="key_id (example: 1)"
                 value={keyId}
@@ -177,7 +177,7 @@ export default function ReturnKey() {
             <div className="text-sm font-semibold text-slate-900">Return by Transaction ID</div>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
               <input
-                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                            placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
                 placeholder="transaction_id (example: 10)"
                 value={txnId}
@@ -186,7 +186,7 @@ export default function ReturnKey() {
               <button
                 onClick={returnByTxn}
                 disabled={busy === "txn"}
-                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium
+                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-900
                            hover:bg-slate-100 transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {busy === "txn" ? "Returning..." : "Return by transaction_id"}

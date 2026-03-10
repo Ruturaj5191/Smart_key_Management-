@@ -8,16 +8,16 @@ function StatusBadge({ status }) {
     s === "OTP_VERIFIED"
       ? "bg-emerald-100 text-emerald-700"
       : s === "REJECTED"
-      ? "bg-rose-100 text-rose-700"
-      : s === "ISSUED"
-      ? "bg-slate-100 text-slate-700"
-      : s === "APPROVED"
-      ? "bg-blue-100 text-blue-700"
-      : s === "OTP_SENT"
-      ? "bg-amber-100 text-amber-700"
-      : s === "PENDING"
-      ? "bg-amber-100 text-amber-700"
-      : "bg-slate-100 text-slate-700";
+        ? "bg-rose-100 text-rose-700"
+        : s === "ISSUED"
+          ? "bg-slate-100 text-slate-700"
+          : s === "APPROVED"
+            ? "bg-blue-100 text-blue-700"
+            : s === "OTP_SENT"
+              ? "bg-amber-100 text-amber-700"
+              : s === "PENDING"
+                ? "bg-amber-100 text-amber-700"
+                : "bg-slate-100 text-slate-700";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
@@ -125,7 +125,7 @@ export default function MyRequests() {
             <select
               value={selectedUnitId}
               onChange={(e) => setSelectedUnitId(e.target.value)}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                          focus:outline-none focus:ring-2 focus:ring-slate-200"
             >
               <option value="">Select Unit</option>
@@ -150,7 +150,7 @@ export default function MyRequests() {
                 loadUnits();
                 loadRequests();
               }}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+              className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
             >
               Refresh
             </button>
@@ -176,7 +176,7 @@ export default function MyRequests() {
 
                     return (
                       <tr key={r.id} className="hover:bg-slate-50/70 align-top">
-                        <td className="px-4 py-3">{r.id}</td>
+                        <td className="px-4 py-3 text-slate-900">{r.id}</td>
 
                         <td className="px-4 py-3">
                           <span className="font-medium text-slate-900">{r.key_id}</span>{" "}
@@ -208,7 +208,7 @@ export default function MyRequests() {
                                     setOtpById((p) => ({ ...p, [r.id]: e.target.value }))
                                   }
                                   placeholder="Enter OTP"
-                                  className="h-9 w-36 rounded-xl border border-slate-200 bg-white px-3 text-xs
+                                  className="h-9 w-36 rounded-xl border border-slate-200 bg-white px-3 text-xs text-slate-900
                                              focus:outline-none focus:ring-2 focus:ring-slate-200"
                                 />
 

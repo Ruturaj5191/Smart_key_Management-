@@ -6,8 +6,8 @@ function StatusBadge({ status }) {
     status === "APPROVED"
       ? "bg-emerald-100 text-emerald-700"
       : status === "REJECTED"
-      ? "bg-rose-100 text-rose-700"
-      : "bg-amber-100 text-amber-700";
+        ? "bg-rose-100 text-rose-700"
+        : "bg-amber-100 text-amber-700";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
@@ -159,7 +159,7 @@ export default function SetupRequests() {
 
           <button
             onClick={refreshAll}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+            className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
           >
             Refresh All
           </button>
@@ -194,7 +194,7 @@ export default function SetupRequests() {
             <button
               onClick={submitSetup}
               disabled={busySetup}
-              className="h-10 rounded-xl bg-slate-900 px-4 text-sm font-medium text-white
+              className="h-10 rounded-xl  text-slate-900 bg-slate-900 px-4 text-sm font-medium text-white
                          hover:bg-slate-800 disabled:opacity-60"
             >
               {busySetup ? "Sending..." : "Send Setup Request"}
@@ -202,7 +202,7 @@ export default function SetupRequests() {
 
             <button
               onClick={loadSetupRequests}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+              className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
             >
               Refresh Setup
             </button>
@@ -261,7 +261,7 @@ export default function SetupRequests() {
             <select
               value={selectedUnitId}
               onChange={(e) => setSelectedUnitId(e.target.value)}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-3 text-sm
                          focus:outline-none focus:ring-2 focus:ring-slate-200"
             >
               <option value="">Select Unit</option>
@@ -276,14 +276,14 @@ export default function SetupRequests() {
               value={keyCode}
               onChange={(e) => setKeyCode(e.target.value)}
               placeholder="Key code (unique)"
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-3 text-sm
                          placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
             />
 
             <select
               value={keyType}
               onChange={(e) => setKeyType(e.target.value)}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-3 text-sm
                          focus:outline-none focus:ring-2 focus:ring-slate-200"
             >
               <option value="MAIN">MAIN</option>
@@ -295,7 +295,7 @@ export default function SetupRequests() {
               value={lockerNo}
               onChange={(e) => setLockerNo(e.target.value)}
               placeholder="Locker no (optional)"
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-3 text-sm
                          placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
             />
 
@@ -312,7 +312,7 @@ export default function SetupRequests() {
           <div className="flex justify-end">
             <button
               onClick={loadKeySetupRequests}
-              className="h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-medium hover:bg-slate-50"
+              className="h-9 rounded-xl  text-slate-900 border border-slate-200 bg-white px-3 text-xs font-medium hover:bg-slate-50"
             >
               Refresh Key Setup Requests
             </button>
@@ -373,7 +373,7 @@ export default function SetupRequests() {
 
           <button
             onClick={loadMyKeyRequests}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+            className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
           >
             Refresh
           </button>

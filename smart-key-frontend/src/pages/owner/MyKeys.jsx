@@ -57,10 +57,10 @@ export default function MyKeys() {
                 <tbody className="divide-y divide-slate-100">
                   {rows.map((r) => (
                     <tr key={r.id} className="hover:bg-slate-50/70">
-                      <td className="px-4 py-3">{r.id}</td>
+                      <td className="px-4 py-3 text-slate-900">{r.id}</td>
                       <td className="px-4 py-3 font-medium text-slate-900">{r.key_code}</td>
-                      <td className="px-4 py-3">{r.key_type}</td>
-                      <td className="px-4 py-3">{r.locker_no || "-"}</td>
+                      <td className="px-4 py-3 text-slate-900">{r.key_type}</td>
+                      <td className="px-4 py-3 text-slate-900">{r.locker_no || "-"}</td>
                       <td className="px-4 py-3"><Badge status={r.status} /></td>
                     </tr>
                   ))}

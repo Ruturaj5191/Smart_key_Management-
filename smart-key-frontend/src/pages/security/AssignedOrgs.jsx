@@ -39,7 +39,7 @@ export default function AssignedOrgs() {
 
           <button
             onClick={load}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+            className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
           >
             Refresh
           </button>
@@ -64,7 +64,7 @@ export default function AssignedOrgs() {
                       <td className="px-4 py-3 font-medium text-slate-900">
                         {r.org_id ?? r.id}
                       </td>
-                      <td className="px-4 py-3">{r.name || r.org_name || "-"}</td>
+                      <td className="px-4 py-3 text-slate-900">{r.name || r.org_name || "-"}</td>
                       <td className="px-4 py-3 text-slate-700">{r.address || "-"}</td>
                       <td className="px-4 py-3">
                         <StatusBadge status={r.status} />

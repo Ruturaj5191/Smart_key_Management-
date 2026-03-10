@@ -6,8 +6,8 @@ function StatusBadge({ status }) {
     status === "APPROVED"
       ? "bg-emerald-100 text-emerald-700"
       : status === "REJECTED"
-      ? "bg-rose-100 text-rose-700"
-      : "bg-amber-100 text-amber-700";
+        ? "bg-rose-100 text-rose-700"
+        : "bg-amber-100 text-amber-700";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
@@ -86,7 +86,7 @@ export default function SetupRequests() {
 
           <div className="flex gap-3">
             <select
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm"
+              className="h-10 rounded-xl  text-slate-900 border border-slate-200 bg-white px-3 text-sm"
               value={setupStatus}
               onChange={(e) => setSetupStatus(e.target.value)}
             >
@@ -97,7 +97,7 @@ export default function SetupRequests() {
 
             <button
               onClick={refreshAll}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+              className="h-10 rounded-xl  text-slate-900 border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
             >
               Refresh All
             </button>
@@ -179,7 +179,7 @@ export default function SetupRequests() {
 
           <div className="flex gap-3">
             <select
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm"
+              className="h-10 rounded-xl border text-slate-900 border-slate-200 bg-white px-3 text-sm"
               value={keyStatus}
               onChange={(e) => setKeyStatus(e.target.value)}
             >
@@ -190,7 +190,7 @@ export default function SetupRequests() {
 
             <button
               onClick={loadKeyRequests}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+              className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
             >
               Refresh
             </button>

@@ -31,7 +31,7 @@ export default function Orgs() {
 
     setBusy(true);
     try {
-      await api.post("/admin/orgs", { name: name.trim(), address: address || null ,phone_number: phone_number || null });
+      await api.post("/admin/orgs", { name: name.trim(), address: address || null, phone_number: phone_number || null });
       setName("");
       setAddress("");
       setPhone("");
@@ -59,7 +59,7 @@ export default function Orgs() {
 
           <button
             onClick={load}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+            className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
           >
             Refresh
           </button>
@@ -68,7 +68,7 @@ export default function Orgs() {
         <div className="px-6 py-5">
           <div className="grid gap-3 md:grid-cols-3">
             <input
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                          placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
               placeholder="Org name"
               value={name}
@@ -76,15 +76,15 @@ export default function Orgs() {
             />
 
             <input
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                          placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
               placeholder="Address (optional)"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
 
-             <input
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+            <input
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                          placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
               placeholder="Mobile Number"
               value={phone_number}

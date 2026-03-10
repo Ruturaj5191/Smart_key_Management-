@@ -6,8 +6,8 @@ function StatusBadge({ status }) {
     status === "APPROVED"
       ? "bg-emerald-100 text-emerald-700"
       : status === "REJECTED"
-      ? "bg-rose-100 text-rose-700"
-      : "bg-amber-100 text-amber-700";
+        ? "bg-rose-100 text-rose-700"
+        : "bg-amber-100 text-amber-700";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
@@ -77,11 +77,11 @@ export default function Requests() {
 
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-slate-700">Status</span>
+              <span className="text-sm font-medium text-slate-700 ">Status</span>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm
+                className="h-10 rounded-xl  text-slate-900 border border-slate-200 bg-white px-3 text-sm
                            focus:outline-none focus:ring-2 focus:ring-slate-200"
               >
                 <option value="PENDING">PENDING</option>
@@ -93,7 +93,7 @@ export default function Requests() {
             <button
               onClick={load}
               disabled={busy === "load"}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium
+              className="h-10 rounded-xl border text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium
                          hover:bg-slate-50 transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {busy === "load" ? "Refreshing..." : "Refresh"}

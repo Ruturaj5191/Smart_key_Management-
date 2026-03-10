@@ -6,8 +6,8 @@ function StatusBadge({ status }) {
     status === "AVAILABLE"
       ? "bg-emerald-100 text-emerald-700"
       : status === "ISSUED"
-      ? "bg-amber-100 text-amber-700"
-      : "bg-rose-100 text-rose-700";
+        ? "bg-amber-100 text-amber-700"
+        : "bg-rose-100 text-rose-700";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
@@ -97,7 +97,7 @@ export default function Keys() {
 
           <button
             onClick={load}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
+            className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50"
           >
             Refresh
           </button>
@@ -107,7 +107,7 @@ export default function Keys() {
           {/* Unit search + select */}
           <div className="grid gap-3 md:grid-cols-5">
             <input
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                          placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 md:col-span-2"
               placeholder="Search unit (office / org / owner / id)"
               value={unitSearch}
@@ -115,7 +115,7 @@ export default function Keys() {
             />
 
             <select
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                          focus:outline-none focus:ring-2 focus:ring-slate-200 md:col-span-3"
               value={unitId}
               onChange={(e) => setUnitId(e.target.value)}
@@ -138,7 +138,7 @@ export default function Keys() {
           {/* Key create form */}
           <div className="grid gap-3 md:grid-cols-5">
             <input
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                          placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 md:col-span-2"
               placeholder="key_code (unique)"
               value={keyCode}
@@ -146,7 +146,7 @@ export default function Keys() {
             />
 
             <select
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                          focus:outline-none focus:ring-2 focus:ring-slate-200"
               value={keyType}
               onChange={(e) => setKeyType(e.target.value)}
@@ -157,7 +157,7 @@ export default function Keys() {
             </select>
 
             <input
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
                          placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
               placeholder="locker_no (optional)"
               value={lockerNo}

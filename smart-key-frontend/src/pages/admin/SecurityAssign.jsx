@@ -5,16 +5,16 @@ function RoleBadge({ roleId }) {
   const id = Number(roleId);
   const label =
     id === 1 ? "SUPER_ADMIN" :
-    id === 2 ? "ADMIN" :
-    id === 3 ? "SECURITY" :
-    id === 4 ? "OWNER" : `ROLE_${id}`;
+      id === 2 ? "ADMIN" :
+        id === 3 ? "SECURITY" :
+          id === 4 ? "OWNER" : `ROLE_${id}`;
 
   const tone =
     id === 3 ? "bg-sky-100 text-sky-700" :
-    id === 2 ? "bg-indigo-100 text-indigo-700" :
-    id === 1 ? "bg-slate-200 text-slate-800" :
-    id === 4 ? "bg-emerald-100 text-emerald-700" :
-    "bg-slate-100 text-slate-600";
+      id === 2 ? "bg-indigo-100 text-indigo-700" :
+        id === 1 ? "bg-slate-200 text-slate-800" :
+          id === 4 ? "bg-emerald-100 text-emerald-700" :
+            "bg-slate-100 text-slate-600";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>

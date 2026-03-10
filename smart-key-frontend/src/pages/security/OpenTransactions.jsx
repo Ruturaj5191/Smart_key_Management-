@@ -6,8 +6,8 @@ function StatusBadge({ status }) {
     status === "ISSUED"
       ? "bg-amber-100 text-amber-700"
       : status === "RETURNED"
-      ? "bg-emerald-100 text-emerald-700"
-      : "bg-rose-100 text-rose-700";
+        ? "bg-emerald-100 text-emerald-700"
+        : "bg-rose-100 text-rose-700";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
@@ -52,7 +52,7 @@ export default function Transactions() {
           <button
             onClick={load}
             disabled={busy}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium
+            className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium
                        hover:bg-slate-50 transition disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {busy ? "Refreshing..." : "Refresh"}
@@ -63,7 +63,7 @@ export default function Transactions() {
           <div className="flex items-center gap-3">
             <label className="text-sm font-medium text-slate-700">Status</label>
             <select
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm"
+              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
             >

@@ -71,6 +71,7 @@ CREATE TABLE key_requests (
 CREATE TABLE key_transactions (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   key_id BIGINT NOT NULL,
+  request_id BIGINT,
   issued_to BIGINT NOT NULL,
   issued_by BIGINT NOT NULL,
   issue_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

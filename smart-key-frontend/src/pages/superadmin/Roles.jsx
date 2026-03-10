@@ -59,7 +59,7 @@ export default function Roles() {
                 {rows.map((r) => (
                   <tr key={r.id} className="hover:bg-slate-50/70">
                     <td className="px-4 py-3 font-medium text-slate-900">{r.id}</td>
-                    <td className="px-4 py-3">{r.name}</td>
+                    <td className="px-4 py-3 text-slate-500">{r.name}</td>
                   </tr>
                 ))}
                 {!rows.length ? (

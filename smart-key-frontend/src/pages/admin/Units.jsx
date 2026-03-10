@@ -94,7 +94,7 @@ export default function Units() {
       {/* Header */}
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900">Units</h2>
+          <h2 className="text-xl font-semibold text-slate-900 text-white">Units</h2>
           <p className="text-sm text-slate-500">
             Create units under organizations and assign owners
           </p>
@@ -103,7 +103,7 @@ export default function Units() {
         <button
           onClick={refreshAll}
           disabled={busy}
-          className="h-10 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50 disabled:opacity-60"
+          className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-4 text-sm font-medium hover:bg-slate-50 disabled:opacity-60"
         >
           {busy ? "Loading..." : "Refresh"}
         </button>
@@ -120,7 +120,7 @@ export default function Units() {
             <select
               value={orgId}
               onChange={(e) => setOrgId(e.target.value)}
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200"
             >
               {orgOptions.map((o) => (
                 <option key={o.id} value={o.id}>
@@ -138,7 +138,7 @@ export default function Units() {
             <select
               value={ownerId}
               onChange={(e) => setOwnerId(e.target.value)}
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200"
             >
               {ownerOptions.map((u) => (
                 <option key={u.id} value={u.id}>
@@ -163,7 +163,7 @@ export default function Units() {
               value={unitName}
               onChange={(e) => setUnitName(e.target.value)}
               placeholder="Office-102"
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
             />
           </div>
 
@@ -196,14 +196,14 @@ export default function Units() {
             <tbody className="divide-y divide-slate-100">
               {rows.map((r) => (
                 <tr key={r.id} className="hover:bg-slate-50">
-                  <td className="px-4 py-3">{r.id}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 text-slate-900">{r.id}</td>
+                  <td className="px-4 py-3 text-slate-900">
                     {r.org_id} <span className="text-slate-500">({r.org_name})</span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 text-slate-900">
                     {r.owner_id} <span className="text-slate-500">({r.owner_name})</span>
                   </td>
-                  <td className="px-4 py-3">{r.unit_name || "-"}</td>
+                  <td className="px-4 py-3 text-slate-900">{r.unit_name || "-"}</td>
                   <td className="px-4 py-3">
                     <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700">
                       {r.status}
