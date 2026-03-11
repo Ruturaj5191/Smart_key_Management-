@@ -24,6 +24,7 @@ CREATE TABLE organizations (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(150) NOT NULL,
   address TEXT,
+  phone_number VARCHAR(20),
   status ENUM('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -127,6 +128,9 @@ CREATE TABLE setup_requests (
   org_name VARCHAR(150) NOT NULL,
   org_address TEXT,
   unit_name VARCHAR(100) NOT NULL,
+  key_code VARCHAR(100),
+  key_type VARCHAR(20),
+  locker_no VARCHAR(50),
   status ENUM('PENDING','APPROVED','REJECTED') DEFAULT 'PENDING',
   approved_by BIGINT NULL,
   note TEXT NULL,
@@ -147,6 +151,34 @@ CREATE TABLE key_setup_requests (
   status ENUM('PENDING','APPROVED','REJECTED') DEFAULT 'PENDING',
   note VARCHAR(255) NULL,
   approved_by INT NULL,
+  created_key_id BIGINT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE facility_requests (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user_id BIGINT NOT NULL,
+  unit_id BIGINT NOT NULL,
+  request_type ENUM('WATER', 'TEA', 'CLEANING') NOT NULL,
+  description TEXT,
+  quantity INT DEFAULT 1,
+  amount DECIMAL(10,2) DEFAULT 0.00,
+  status ENUM('PENDING', 'APPROVED', 'REJECTED', 'IN_PROGRESS', 'COMPLETED') DEFAULT 'PENDING',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (unit_id) REFERENCES units(id)
+);
+CREATE TABLE service_prices (
+  service_type ENUM('WATER', 'TEA', 'CLEANING') PRIMARY KEY,
+  price DECIMAL(10,2) NOT NULL,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO service_prices (service_type, price) VALUES
+('WATER', 20.00),
+('TEA', 10.00),
+('CLEANING', 100.00)
+ON DUPLICATE KEY UPDATE price = VALUES(price);

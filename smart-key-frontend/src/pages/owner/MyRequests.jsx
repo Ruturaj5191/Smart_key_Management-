@@ -125,7 +125,7 @@ export default function MyRequests() {
             <select
               value={selectedUnitId}
               onChange={(e) => setSelectedUnitId(e.target.value)}
-              className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900
+              className="h-10 rounded-xl text-slate-900 border border-slate-200 bg-white px-3 text-sm text-slate-900
                          focus:outline-none focus:ring-2 focus:ring-slate-200"
             >
               <option value="">Select Unit</option>

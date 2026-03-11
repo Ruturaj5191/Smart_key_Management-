@@ -8,6 +8,8 @@ export default function RequestCleaning() {
   const [desc, setDesc] = useState("");
   const [busy, setBusy] = useState(false);
 
+  const [prices, setPrices] = useState({ CLEANING: 100 });
+
   // Load owner units
   const loadUnits = async () => {
     try {
@@ -18,17 +20,28 @@ export default function RequestCleaning() {
     }
   };
 
+  const loadPrices = async () => {
+    try {
+      const res = await api.get("/prices");
+      setPrices(res.data.data);
+    } catch (err) {
+      console.error("Failed to load prices");
+    }
+  };
+
   useEffect(() => {
     loadUnits();
+    loadPrices();
   }, []);
 
   const submit = async () => {
     if (!unitId) return alert("Select a unit first");
     setBusy(true);
     try {
-      await createFacilityRequest({
+      await api.post("/requests/facility", {
         request_type: "CLEANING",
         unit_id: Number(unitId),
+        quantity: 1,
         description: desc,
       });
       alert("Cleaning request sent ✅");
@@ -70,6 +83,13 @@ export default function RequestCleaning() {
         className="rounded-xl border  text-slate-900 border-slate-200 p-3 w-full text-sm
                    focus:outline-none focus:ring-2 focus:ring-slate-200"
       />
+
+      <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 border border-emerald-100">
+        <div className="text-sm text-emerald-800">
+          <span className="font-semibold">Service Charge:</span> ₹{prices.CLEANING || 0}
+        </div>
+        <p className="text-[10px] text-emerald-600 font-medium tracking-tight uppercase">Fixed per session</p>
+      </div>
 
       {/* Submit */}
       <button

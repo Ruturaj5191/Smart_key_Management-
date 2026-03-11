@@ -24,6 +24,10 @@ export default function SetupRequests() {
   const [unitName, setUnitName] = useState("");
   const [busySetup, setBusySetup] = useState(false);
 
+  // ---- dropdown list of existing orgs ----
+  const [allOrgs, setAllOrgs] = useState([]);
+  const [selectedOrgId, setSelectedOrgId] = useState("");
+
   // ---- units dropdown (owner units) ----
   const [units, setUnits] = useState([]);
   const [selectedUnitId, setSelectedUnitId] = useState("");
@@ -53,6 +57,15 @@ export default function SetupRequests() {
     setSetupRows(res.data.data || []);
   };
 
+  const loadAllOrganizations = async () => {
+    try {
+      const res = await api.get("/owner/all-organizations");
+      setAllOrgs(res.data.data || []);
+    } catch (e) {
+      console.error("Failed to load organizations");
+    }
+  };
+
   const loadUnits = async () => {
     const res = await api.get("/owner/units");
     setUnits(res.data.data || []);
@@ -72,6 +85,7 @@ export default function SetupRequests() {
   const refreshAll = async () => {
     await Promise.allSettled([
       loadSetupRequests(),
+      loadAllOrganizations(),
       loadUnits(),
       loadKeySetupRequests(),
       loadMyKeyRequests(),
@@ -79,6 +93,21 @@ export default function SetupRequests() {
   };
 
   // ---------------- ACTIONS ----------------
+
+  // ✅ When selecting an existing org from dropdown
+  const handleOrgChange = (orgId) => {
+    setSelectedOrgId(orgId);
+    if (!orgId || orgId === "other") {
+      setOrgName("");
+      setOrgAddress("");
+      return;
+    }
+    const found = allOrgs.find((o) => o.id === Number(orgId));
+    if (found) {
+      setOrgName(found.name);
+      setOrgAddress(found.address || "");
+    }
+  };
 
   // ✅ Owner sends Org + Unit request to admin
   const submitSetup = async () => {
@@ -103,6 +132,7 @@ export default function SetupRequests() {
       setOrgName("");
       setOrgAddress("");
       setUnitName("");
+      setSelectedOrgId("");
 
       await loadSetupRequests();
       alert("Setup request sent ✅");
@@ -167,23 +197,54 @@ export default function SetupRequests() {
 
         <div className="px-6 py-5">
           <div className="grid gap-3 md:grid-cols-3">
+            <div className="flex flex-col gap-1">
+              <select
+                className="h-10 rounded-xl border border-slate-200 px-3 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-slate-200 text-slate-900"
+                value={selectedOrgId}
+                onChange={(e) => handleOrgChange(e.target.value)}
+              >
+                <option value="">Select Organization</option>
+                {allOrgs.map((o) => (
+                  <option key={o.id} value={o.id}>
+                    {o.name}
+                  </option>
+                ))}
+                <option value="other">+ Other (New Organization)</option>
+              </select>
+              {selectedOrgId === "other" && (
+                <input
+                  className="mt-2 h-10 rounded-xl border border-slate-200 px-3 text-sm
+                             placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 text-slate-900"
+                  placeholder="Enter new organization name"
+                  value={orgName}
+                  onChange={(e) => setOrgName(e.target.value)}
+                />
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1">
+              {selectedOrgId && selectedOrgId !== "other" ? (
+                <input
+                  readOnly
+                  className="h-10 rounded-xl border border-slate-100 bg-slate-50 px-3 text-sm text-slate-500 cursor-not-allowed"
+                  placeholder="Organization address"
+                  value={orgAddress}
+                />
+              ) : (
+                <input
+                  className="h-10 rounded-xl border border-slate-200 px-3 text-sm
+                             placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 text-slate-900"
+                  placeholder="Organization address (optional)"
+                  value={orgAddress}
+                  onChange={(e) => setOrgAddress(e.target.value)}
+                />
+              )}
+            </div>
+
             <input
               className="h-10 rounded-xl border border-slate-200 px-3 text-sm
-                         placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
-              placeholder="Organization name"
-              value={orgName}
-              onChange={(e) => setOrgName(e.target.value)}
-            />
-            <input
-              className="h-10 rounded-xl border border-slate-200 px-3 text-sm
-                         placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
-              placeholder="Organization address (optional)"
-              value={orgAddress}
-              onChange={(e) => setOrgAddress(e.target.value)}
-            />
-            <input
-              className="h-10 rounded-xl border border-slate-200 px-3 text-sm
-                         placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                         placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-200 text-slate-900"
               placeholder="Unit name (example: Office-101)"
               value={unitName}
               onChange={(e) => setUnitName(e.target.value)}
@@ -194,7 +255,7 @@ export default function SetupRequests() {
             <button
               onClick={submitSetup}
               disabled={busySetup}
-              className="h-10 rounded-xl  text-slate-900 bg-slate-900 px-4 text-sm font-medium text-white
+              className="h-10 rounded-xl text-white bg-slate-900 px-4 text-sm font-medium
                          hover:bg-slate-800 disabled:opacity-60"
             >
               {busySetup ? "Sending..." : "Send Setup Request"}
@@ -261,7 +322,7 @@ export default function SetupRequests() {
             <select
               value={selectedUnitId}
               onChange={(e) => setSelectedUnitId(e.target.value)}
-              className="h-10 rounded-xl border  text-slate-900 border-slate-200 bg-white px-3 text-sm
+              className="h-10 rounded-xl border   text-slate-900 border-slate-200 bg-white px-3 text-sm
                          focus:outline-none focus:ring-2 focus:ring-slate-200"
             >
               <option value="">Select Unit</option>
@@ -331,7 +392,7 @@ export default function SetupRequests() {
                     <th className="px-4 py-3 text-left font-semibold">Note</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 text-slate-900">
                   {keySetupRows.map((r) => (
                     <tr key={r.id} className="hover:bg-slate-50/70">
                       <td className="px-4 py-3">{r.id}</td>

@@ -506,10 +506,12 @@ exports.listKeyRequests = async (req, res, next) => {
       SELECT kr.id, kr.key_id, k.key_code, k.key_type,
              kr.requested_by, rb.name AS requested_by_name,
              kr.approved_by, ab.name AS approved_by_name,
-             kr.status, kr.requested_at
+             kr.status, kr.requested_at,
+             o.name AS org_name
       FROM key_requests kr
       JOIN keyss k ON k.id = kr.key_id
       JOIN units u ON u.id = k.unit_id
+      JOIN organizations o ON o.id = u.org_id
       JOIN users rb ON rb.id = kr.requested_by
       LEFT JOIN users ab ON ab.id = kr.approved_by
     `;

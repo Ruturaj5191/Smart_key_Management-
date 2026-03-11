@@ -110,6 +110,7 @@ export default function Requests() {
                   <tr>
                     <th className="px-4 py-3 text-left font-semibold">ID</th>
                     <th className="px-4 py-3 text-left font-semibold">Key</th>
+                    <th className="px-4 py-3 text-left font-semibold">Organization</th>
                     <th className="px-4 py-3 text-left font-semibold">Requested By</th>
                     <th className="px-4 py-3 text-left font-semibold">Approved By</th>
                     <th className="px-4 py-3 text-left font-semibold">Status</th>
@@ -117,7 +118,7 @@ export default function Requests() {
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 text-slate-900">
                   {rows.map((r) => (
                     <tr key={r.id} className="hover:bg-slate-50/70">
                       <td className="px-4 py-3">{r.id}</td>
@@ -126,7 +127,10 @@ export default function Requests() {
                         <span className="font-medium text-slate-900">{r.key_id}</span>{" "}
                         <span className="text-slate-500">({r.key_code})</span>
                       </td>
-
+                      <td className="px-4 py-3">
+                        <span className="font-medium text-slate-900">{r.org_id}</span>{" "}
+                        <span className="text-slate-500">({r.org_name})</span>
+                      </td>
                       <td className="px-4 py-3">
                         <span className="font-medium text-slate-900">{r.requested_by}</span>{" "}
                         <span className="text-slate-500">({r.requested_by_name})</span>

@@ -11,6 +11,8 @@ const transactionRoutes = require("./src/routes/transaction.routes");
 const ownerRoutes = require("./src/routes/owner.routes");
 const securityRoutes = require("./src/routes/security.routes");
 const superAdminRoutes = require("./src/routes/superAdmin.routes");
+const priceRoutes = require("./src/routes/price.routes");
+const statsRoutes = require("./src/routes/stats.routes");
 
 const errorMiddleware = require("./src/middleware/error.middleware");
 const { startOverdueKeysCron } = require("./src/cron/overduekeys");
@@ -31,6 +33,8 @@ app.use("/api/transactions", transactionRoutes);
 app.use("/api/owner", ownerRoutes);
 app.use("/api/security", securityRoutes);
 app.use("/api/superadmin", superAdminRoutes);
+app.use("/api/prices", priceRoutes);
+app.use("/api/stats", statsRoutes);
 
 // global error handler
 app.use(errorMiddleware);

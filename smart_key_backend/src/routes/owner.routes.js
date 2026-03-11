@@ -13,6 +13,13 @@ router.use(allowRoles([4])); // OWNER role_id=4
 router.get("/units", ownerController.getMyUnits);
 router.get("/keys", ownerController.getMyKeys);
 router.get("/notifications", ownerController.getMyNotifications);
+router.get("/all-organizations", ownerController.listAllOrganizations);
+router.get("/tea-history", ownerController.getTeaHistory);
+router.get("/tea-bill", ownerController.getTeaBill);
+router.get("/water-history", ownerController.getWaterHistory);
+router.get("/water-bill", ownerController.getWaterBill);
+router.get("/cleaning-history", ownerController.getCleaningHistory);
+router.get("/cleaning-bill", ownerController.getCleaningBill);
 
 // setup requests
 router.post("/setup-requests", ownerController.createSetupRequest);

@@ -46,7 +46,7 @@ export default function FacilityRequests() {
       <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-100 px-6 py-5">
           <h2 className="text-xl font-semibold text-slate-900">
-            Facility Requests (Water / Cleaning)
+            Facility Requests (Water / Cleaning / Tea)
           </h2>
         </div>
 
@@ -58,12 +58,14 @@ export default function FacilityRequests() {
                 <th className="px-4 py-3 text-left">Type</th>
                 <th className="px-4 py-3 text-left">Requested By</th>
                 <th className="px-4 py-3 text-left">Unit</th>
+                <th className="px-4 py-3 text-left">Qty</th>
+                <th className="px-4 py-3 text-left">Amount</th>
                 <th className="px-4 py-3 text-left">Status</th>
                 <th className="px-4 py-3 text-left">Action</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 text-slate-900">
               {rows.map((r) => (
                 <tr key={r.id}>
                   <td className="px-4 py-3">{r.id}</td>
@@ -76,6 +78,11 @@ export default function FacilityRequests() {
                     <div className="text-xs text-slate-500">
                       {r.org_name}
                     </div>
+                  </td>
+
+                  <td className="px-4 py-3">{r.quantity || 1}</td>
+                  <td className="px-4 py-3 font-semibold text-slate-900">
+                    {r.amount ? `₹${r.amount}` : "-"}
                   </td>
 
                   <td className="px-4 py-3">

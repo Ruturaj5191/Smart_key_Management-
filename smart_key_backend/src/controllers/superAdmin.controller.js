@@ -313,6 +313,7 @@ exports.overview = async (req, res, next) => {
         o.id   AS org_id,
         o.name AS org_name,
         o.address,
+        o.phone_number,
         o.status AS org_status,
 
         u.id   AS unit_id,
@@ -351,6 +352,7 @@ exports.overview = async (req, res, next) => {
           org_id: r.org_id,
           org_name: r.org_name,
           address: r.address,
+          phone_number: r.phone_number,
           org_status: r.org_status,
           units: [],
           security_users: [],

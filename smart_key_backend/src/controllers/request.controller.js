@@ -263,18 +263,34 @@ exports.verifyOtp = async (req, res, next) => {
 };
 
 exports.createFacilityRequest = async (req, res) => {
-  const { request_type, description, unit_id } = req.body;
+  const { request_type, description, unit_id, quantity } = req.body;
   const user_id = req.user.id;
+
+  // Dynamic pricing from DB
+  let amount = 0;
+  try {
+    const priceRows = await exe(`SELECT price FROM service_prices WHERE service_type = ? LIMIT 1`, [request_type]);
+    const basePrice = priceRows.length ? priceRows[0].price : 0;
+    
+    if (request_type === "CLEANING") {
+      amount = basePrice;
+    } else {
+      amount = (quantity || 1) * basePrice;
+    }
+  } catch (priceErr) {
+    console.error("Price fetch error:", priceErr);
+    // fallback or error
+  }
 
   const sql = `
     INSERT INTO facility_requests
-    (user_id, unit_id, request_type, description)
-    VALUES (?, ?, ?, ?)
+    (user_id, unit_id, request_type, description, quantity, amount)
+    VALUES (?, ?, ?, ?, ?, ?)
   `;
 
   await exe(
     sql,
-    [user_id, unit_id, request_type, description],
+    [user_id, unit_id, request_type, description, quantity || 1, amount],
     (err, result) => {
       if (err) {
         return res.status(500).json({
@@ -302,6 +318,8 @@ exports.getFacilityRequests = async(req, res) => {
       fr.request_type,
       fr.status,
       fr.description,
+      fr.quantity,
+      fr.amount,
       fr.created_at,
 
       u.id AS unit_id,

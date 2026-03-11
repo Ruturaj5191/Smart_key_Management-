@@ -322,3 +322,116 @@ exports.listMyKeyRequests = async (req, res, next) => {
     next(err);
   }
 };
+// ✅ GET /api/owner/all-organizations
+exports.listAllOrganizations = async (req, res, next) => {
+  try {
+    const rows = await exe(
+      `SELECT id, name, address FROM organizations WHERE status = 'ACTIVE' ORDER BY name ASC`
+    );
+    return res.json({ success: true, data: rows });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ✅ GET /api/owner/tea-history
+exports.getTeaHistory = async (req, res, next) => {
+  try {
+    const rows = await exe(
+      `SELECT fr.id, fr.request_type, fr.status, fr.description, fr.quantity, fr.amount, fr.created_at,
+              u.unit_name, o.name AS org_name
+       FROM facility_requests fr
+       JOIN units u ON u.id = fr.unit_id
+       JOIN organizations o ON o.id = u.org_id
+       WHERE fr.user_id = ? AND fr.request_type = 'TEA'
+       ORDER BY fr.id DESC`,
+      [req.user.id]
+    );
+    return res.json({ success: true, data: rows });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ✅ GET /api/owner/tea-bill
+exports.getTeaBill = async (req, res, next) => {
+  try {
+    const rows = await exe(
+      `SELECT 
+         COUNT(*) as total_requests,
+         SUM(quantity) as total_quantity,
+         SUM(amount) as total_amount
+       FROM facility_requests
+       WHERE user_id = ? AND request_type = 'TEA' AND status = 'COMPLETED'`,
+      [req.user.id]
+    );
+    return res.json({ success: true, data: rows[0] || { total_requests: 0, total_quantity: 0, total_amount: 0 } });
+  } catch (err) {
+    next(err);
+  }
+};
+// ✅ WATER
+exports.getWaterHistory = async (req, res, next) => {
+  try {
+    const rows = await exe(
+      `SELECT fr.id, fr.request_type, fr.status, fr.description, fr.quantity, fr.amount, fr.created_at,
+              u.unit_name, o.name AS org_name
+       FROM facility_requests fr
+       JOIN units u ON u.id = fr.unit_id
+       JOIN organizations o ON o.id = u.org_id
+       WHERE fr.user_id = ? AND fr.request_type = 'WATER'
+       ORDER BY fr.id DESC`,
+      [req.user.id]
+    );
+    return res.json({ success: true, data: rows });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getWaterBill = async (req, res, next) => {
+  try {
+    const rows = await exe(
+      `SELECT COUNT(*) as total_requests, SUM(quantity) as total_quantity, SUM(amount) as total_amount
+       FROM facility_requests
+       WHERE user_id = ? AND request_type = 'WATER' AND status = 'COMPLETED'`,
+      [req.user.id]
+    );
+    return res.json({ success: true, data: rows[0] || { total_requests: 0, total_quantity: 0, total_amount: 0 } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ✅ CLEANING
+exports.getCleaningHistory = async (req, res, next) => {
+  try {
+    const rows = await exe(
+      `SELECT fr.id, fr.request_type, fr.status, fr.description, fr.quantity, fr.amount, fr.created_at,
+              u.unit_name, o.name AS org_name
+       FROM facility_requests fr
+       JOIN units u ON u.id = fr.unit_id
+       JOIN organizations o ON o.id = u.org_id
+       WHERE fr.user_id = ? AND fr.request_type = 'CLEANING'
+       ORDER BY fr.id DESC`,
+      [req.user.id]
+    );
+    return res.json({ success: true, data: rows });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getCleaningBill = async (req, res, next) => {
+  try {
+    const rows = await exe(
+      `SELECT COUNT(*) as total_requests, SUM(quantity) as total_quantity, SUM(amount) as total_amount
+       FROM facility_requests
+       WHERE user_id = ? AND request_type = 'CLEANING' AND status = 'COMPLETED'`,
+      [req.user.id]
+    );
+    return res.json({ success: true, data: rows[0] || { total_requests: 0, total_quantity: 0, total_amount: 0 } });
+  } catch (err) {
+    next(err);
+  }
+};

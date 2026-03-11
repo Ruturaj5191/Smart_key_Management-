@@ -23,6 +23,7 @@ import Requests from "./pages/admin/Requests";
 import Reports from "./pages/admin/Reports";
 import AdminSetupRequests from "./pages/admin/SetupRequests";
 import AdminFacilityRequests from "./pages/admin/FacilityRequests";
+import PriceSettings from "./pages/admin/PriceSettings";
 
 
 // owner pages
@@ -35,6 +36,10 @@ import RequestWater from "./pages/owner/RequestWater";
 import RequestCleaning from "./pages/owner/RequestCleaning";
 import FacilityRequests from "./pages/security/FacilityRequests";
 import MyFacilityRequests from "./pages/owner/MyFacilityRequests";
+import RequestTea from "./pages/owner/RequestTea";
+import TeaHistory from "./pages/owner/TeaHistory";
+import WaterHistory from "./pages/owner/WaterHistory";
+import CleaningHistory from "./pages/owner/CleaningHistory";
 
 
 
@@ -155,6 +160,17 @@ export default function App() {
             }
           />
 
+          <Route
+            path="/admin/prices"
+            element={
+              <ProtectedRoute>
+                <RoleRoute allowed={[ROLE.ADMIN, ROLE.SUPER_ADMIN]}>
+                  <PriceSettings />
+                </RoleRoute>
+              </ProtectedRoute>
+            }
+          />
+
 
           {/* ✅ SUPERADMIN Dashboard */}
           <Route
@@ -253,8 +269,24 @@ export default function App() {
             <ProtectedRoute><RoleRoute allowed={[ROLE.OWNER]}><RequestWater /></RoleRoute></ProtectedRoute>
           } />
 
+          <Route path="/owner/water-history" element={
+            <ProtectedRoute><RoleRoute allowed={[ROLE.OWNER]}><WaterHistory /></RoleRoute></ProtectedRoute>
+          } />
+
           <Route path="/owner/request-cleaning" element={
             <ProtectedRoute><RoleRoute allowed={[ROLE.OWNER]}><RequestCleaning /></RoleRoute></ProtectedRoute>
+          } />
+
+          <Route path="/owner/cleaning-history" element={
+            <ProtectedRoute><RoleRoute allowed={[ROLE.OWNER]}><CleaningHistory /></RoleRoute></ProtectedRoute>
+          } />
+
+          <Route path="/owner/request-tea" element={
+            <ProtectedRoute><RoleRoute allowed={[ROLE.OWNER]}><RequestTea /></RoleRoute></ProtectedRoute>
+          } />
+
+          <Route path="/owner/tea-history" element={
+            <ProtectedRoute><RoleRoute allowed={[ROLE.OWNER]}><TeaHistory /></RoleRoute></ProtectedRoute>
           } />
 
           <Route path="/security/facility-requests" element={

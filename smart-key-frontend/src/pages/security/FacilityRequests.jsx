@@ -8,13 +8,21 @@ import {
 function StatusBadge({ status }) {
   const tone =
     status === "COMPLETED"
-      ? "bg-emerald-100 text-emerald-700"
+      ? "bg-emerald-100 text-emerald-700 border-emerald-200 shadow-sm shadow-emerald-100"
       : status === "IN_PROGRESS"
-      ? "bg-blue-100 text-blue-700"
-      : "bg-amber-100 text-amber-700";
+        ? "bg-blue-100 text-blue-700 border-blue-200 shadow-sm shadow-blue-100 animate-pulse"
+        : status === "REJECTED"
+        ? "bg-rose-100 text-rose-700 border-rose-200"
+        : "bg-amber-100 text-amber-700 border-amber-200";
 
   return (
-    <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-bold tracking-tight ${tone}`}>
+      {status === "IN_PROGRESS" && (
+        <span className="mr-1.5 flex h-1.5 w-1.5">
+          <span className="absolute inline-flex h-1.5 w-1.5 animate-ping rounded-full bg-blue-400 opacity-75"></span>
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+        </span>
+      )}
       {status}
     </span>
   );
@@ -49,7 +57,7 @@ export default function FacilityRequests() {
         {/* Header */}
         <div className="border-b border-slate-100 px-6 py-5">
           <h2 className="text-xl font-semibold text-slate-900">
-            Facility Requests (Water / Cleaning)
+            Facility Requests (Water / Cleaning / Tea)
           </h2>
         </div>
 
@@ -68,7 +76,7 @@ export default function FacilityRequests() {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 text-slate-900">
               {rows.map((r) => (
                 <tr key={r.id} className="hover:bg-slate-50/70 align-top">
                   <td className="px-4 py-3">{r.id}</td>
@@ -100,35 +108,39 @@ export default function FacilityRequests() {
                   </td>
 
                   <td className="px-4 py-3">
-                    {r.status !== "COMPLETED" ? (
-                      <div className="flex gap-2">
+                    <div className="flex gap-2">
+                      {r.status === "PENDING" && (
                         <button
                           disabled={busyId === r.id}
                           onClick={() => update(r.id, "IN_PROGRESS")}
                           className="
                             h-8 rounded-lg bg-blue-600 px-3 text-xs font-semibold text-white
-                            hover:bg-blue-700 transition
+                            hover:bg-blue-700 transition shadow-sm active:scale-95
                             disabled:opacity-60 disabled:cursor-not-allowed
                           "
                         >
-                          {busyId === r.id ? "Updating..." : "In Progress"}
+                          {busyId === r.id ? "..." : "In Progress"}
                         </button>
+                      )}
 
+                      {(r.status === "PENDING" || r.status === "IN_PROGRESS") && (
                         <button
                           disabled={busyId === r.id}
                           onClick={() => update(r.id, "COMPLETED")}
                           className="
                             h-8 rounded-lg bg-emerald-600 px-3 text-xs font-semibold text-white
-                            hover:bg-emerald-700 transition
+                            hover:bg-emerald-700 transition shadow-sm active:scale-95
                             disabled:opacity-60 disabled:cursor-not-allowed
                           "
                         >
-                          {busyId === r.id ? "Updating..." : "Complete"}
+                          {busyId === r.id ? "..." : "Complete"}
                         </button>
-                      </div>
-                    ) : (
-                      <span className="text-xs text-slate-400">—</span>
-                    )}
+                      )}
+
+                      {r.status === "COMPLETED" && (
+                        <span className="text-xs text-slate-400 italic">No action</span>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

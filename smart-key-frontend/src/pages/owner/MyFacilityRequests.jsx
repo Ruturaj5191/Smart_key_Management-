@@ -6,8 +6,8 @@ function StatusBadge({ status }) {
     status === "COMPLETED"
       ? "bg-emerald-100 text-emerald-700"
       : status === "IN_PROGRESS"
-      ? "bg-blue-100 text-blue-700"
-      : "bg-amber-100 text-amber-700";
+        ? "bg-blue-100 text-blue-700"
+        : "bg-amber-100 text-amber-700";
 
   return (
     <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${tone}`}>
@@ -47,13 +47,15 @@ export default function MyFacilityRequests() {
                 <th className="px-4 py-3 text-left">ID</th>
                 <th className="px-4 py-3 text-left">Type</th>
                 <th className="px-4 py-3 text-left">Unit</th>
+                <th className="px-4 py-3 text-left">Qty</th>
+                <th className="px-4 py-3 text-left">Amount</th>
                 <th className="px-4 py-3 text-left">Description</th>
                 <th className="px-4 py-3 text-left">Status</th>
                 <th className="px-4 py-3 text-left">Requested At</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 text-slate-900">
               {rows.map((r) => (
                 <tr key={r.id} className="hover:bg-slate-50/70">
                   <td className="px-4 py-3">{r.id}</td>
@@ -69,6 +71,11 @@ export default function MyFacilityRequests() {
                     <div className="text-xs text-slate-500">
                       {r.org_name}
                     </div>
+                  </td>
+
+                  <td className="px-4 py-3">{r.quantity || 1}</td>
+                  <td className="px-4 py-3 font-semibold text-slate-900">
+                    {r.amount ? `₹${r.amount}` : "-"}
                   </td>
 
                   <td className="px-4 py-3 text-slate-700">

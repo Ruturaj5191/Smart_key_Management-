@@ -200,7 +200,7 @@ export default function SetupRequests() {
         <div className="px-6 py-5">
           <div className="overflow-hidden rounded-2xl border border-slate-200">
             <div className="overflow-x-auto">
-              <table className="min-w-full text-sm">
+              <table className="min-w-full text-sm text-slate-900">
                 <thead className="bg-slate-50 text-slate-600">
                   <tr>
                     <th className="px-4 py-3 text-left font-semibold">ID</th>
