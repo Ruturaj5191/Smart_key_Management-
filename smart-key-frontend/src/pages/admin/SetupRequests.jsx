@@ -119,7 +119,7 @@ export default function SetupRequests() {
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 text-slate-900">
                   {setupRows.map((r) => (
                     <tr key={r.id} className="hover:bg-slate-50/70">
                       <td className="px-4 py-3">{r.id}</td>

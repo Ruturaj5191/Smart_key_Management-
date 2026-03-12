@@ -171,6 +171,8 @@ CREATE TABLE facility_requests (
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (unit_id) REFERENCES units(id)
 );
+
+
 CREATE TABLE service_prices (
   service_type ENUM('WATER', 'TEA', 'CLEANING') PRIMARY KEY,
   price DECIMAL(10,2) NOT NULL,

@@ -271,7 +271,7 @@ export default function SetupRequests() {
 
           <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200">
             <div className="overflow-x-auto">
-              <table className="min-w-full text-sm">
+              <table className="min-w-full text-sm ">
                 <thead className="bg-slate-50 text-slate-600">
                   <tr>
                     <th className="px-4 py-3 text-left font-semibold">ID</th>
@@ -281,7 +281,7 @@ export default function SetupRequests() {
                     <th className="px-4 py-3 text-left font-semibold">Note</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 text-slate-900">
                   {setupRows.map((r) => (
                     <tr key={r.id} className="hover:bg-slate-50/70">
                       <td className="px-4 py-3">{r.id}</td>
