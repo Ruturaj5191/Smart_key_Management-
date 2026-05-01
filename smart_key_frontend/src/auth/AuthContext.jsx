@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/client";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
+  const navigate = useNavigate();
   const [token, setToken] = useState(localStorage.getItem("TOKEN") || "");
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,7 @@ const register = async ({ name, email, mobile, password, role_id }) => {
     localStorage.removeItem("TOKEN");
     setToken("");
     setUser(null);
+    navigate("/login", { replace: true });
   };
 
   useEffect(() => {
